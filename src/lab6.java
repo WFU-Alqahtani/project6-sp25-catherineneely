@@ -1,6 +1,8 @@
 // Catherine Neely
 // 03.31.25
 
+import java.util.Scanner;
+
 public class lab6 {
 
     public static LinkedList initialize_deck() {
@@ -22,11 +24,19 @@ public class lab6 {
     }
 
     private static void play_blind_mans_bluff(LinkedList player1, LinkedList computer, LinkedList deck) {
-        System.out.println("\nStarting Blind mans Bluff \n");
-        // play the game FIXME
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("\nStarting Blind Mans Bluff \n");
+
+        int rounds = 5;
+        int userWins = 0;
+        int computerWins = 0;
+
+        while (rounds > 0) {
+            System.out.println("\nRound " + rounds + "\n");
+        }
     }
     public static void rage_quit() {
-        // play the game FIXME
+        // FIXME
     }
 
     public static void main(String[] args) {
