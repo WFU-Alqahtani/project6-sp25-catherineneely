@@ -27,12 +27,57 @@ public class LinkedList {
 
     // remove a card from a specific index
     public Card remove_from_index(int index) {
-        // FIXME
+        // checks if the index exists
+        if (index >= size) {
+            return null;
+        }
+        Node curr = head;
+        for(int i = 0; i < index; i++) {
+            curr = curr.next;
+        }
+        // removes the head
+        if (curr == head) {
+            head = curr.next;
+        }
+        // removes the tail
+        if (curr == tail) {
+            tail = curr.prev;
+        }
+        // changes the next of the prev card to be the current card's next
+        if (curr.prev != null) {
+            curr.prev.next = curr.next;
+        }
+        // changes the prev of the next card to be the current card's prev
+        if (curr.next != null) {
+            curr.next.prev = curr.prev;
+        }
+        size--;
+        return curr.data;
     }
 
     // insert a card at a specific index
     public void insert_at_index(Card x, int index) {
-        // FIXME
+        Node newCard = new Node(x);
+        // if the index is greater than or equal to the size, the new card is added at the tail
+        if (index >= size) {
+            add_at_tail(x);
+            return;
+        }
+        Node curr = head;
+        for(int i = 0; i < index; i++) {
+            curr = curr.next;
+        }
+        // adds the new card as the head (if the index is zero)
+        if (curr == head) {
+            head = newCard;
+        }
+        newCard.next = curr;
+        newCard.prev = curr.prev;
+        if (curr.prev != null) {
+            curr.prev.next = newCard;
+        }
+        curr.prev = newCard;
+        size++;
     }
 
     // swap two cards in the deck at the specific indices
