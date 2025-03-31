@@ -92,8 +92,15 @@ public class LinkedList {
             return;
         }
         // removes the cards from the respective indices
-        Card card1 = remove_from_index(index1);
-        Card card2 = remove_from_index(index2);
+        Card card1;
+        Card card2;
+        if (index1 > index2) {
+            card1 = remove_from_index(index1);
+            card2 = remove_from_index(index2);
+        } else {
+            card2 = remove_from_index(index2);
+            card1 = remove_from_index(index1);
+        }
         // adds the cards to the new indices
         insert_at_index(card1, index2);
         insert_at_index(card2, index1);
