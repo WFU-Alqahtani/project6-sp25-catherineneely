@@ -38,6 +38,10 @@ public class lab6 {
 
             Card userCard = user.remove_from_head();
             Card computerCard = computer.remove_from_head();
+            if (userCard == null || computerCard == null) {
+                System.out.println("Invalid card.");
+                return;
+            }
 
             System.out.println("User card--> ?");
             System.out.print("Computer card--> ");
@@ -46,15 +50,16 @@ public class lab6 {
             System.out.print("\nGuess if your card higher or lower (H/L): ");
             String guess = scanner.nextLine();
 
-            int compare = userCard.getRank().compareTo(computerCard.getRank());
+            int compare = 0;
+            try {
+                compare = userCard.getRank().compareTo(computerCard.getRank());
+            } catch (NullPointerException e) {
+                System.out.println("Invalid card.");
+                return;
+            }
 
             if ((guess.equalsIgnoreCase("H") && compare > 0) || (guess.equalsIgnoreCase("L") && compare < 0)) {
                 System.out.println("You guessed correctly!");
-                System.out.print("User card--> ");
-                userCard.print_card();
-                System.out.print("\nComputer card--> ");
-                computerCard.print_card();
-                System.out.println();
                 userWins++;
                 prevUserLosses = 0;
             } else if (compare == 0) {
@@ -62,37 +67,29 @@ public class lab6 {
                 compare = userCard.getSuit().compareTo(computerCard.getSuit());
                 if (compare > 0) {
                     System.out.println("User wins based on suit!");
-                    System.out.print("User card--> ");
-                    userCard.print_card();
-                    System.out.print("\nComputer card--> ");
-                    computerCard.print_card();
-                    System.out.println();
                     userWins++;
                     prevUserLosses = 0;
                 } else if (compare < 0) {
                     System.out.println("Computer wins based on suit!");
-                    System.out.print("User card--> ");
-                    userCard.print_card();
-                    System.out.print("\nComputer card--> ");
-                    computerCard.print_card();
-                    System.out.println();
                     computerWins++;
                     userLosses++;
                     prevUserLosses++;
                 }
             } else {
                 System.out.println("You guessed incorrectly!");
-                System.out.print("User card--> ");
-                userCard.print_card();
-                System.out.print("\nComputer card--> ");
-                computerCard.print_card();
-                System.out.println();
                 computerWins++;
                 userLosses++;
                 prevUserLosses++;
             }
+            System.out.print("User card--> ");
+            userCard.print_card();
+            System.out.print("\nComputer card--> ");
+            computerCard.print_card();
+            System.out.println();
+            deck.add_at_tail(userCard);
+            deck.add_at_tail(computerCard);
 
-            if (userLosses == 3 && prevUserLosses == 2) {
+            if (userLosses == 3 && (prevUserLosses - 1) == 2) {
                 rage_quit(user, computer, deck);
                 return;
             }
@@ -124,6 +121,7 @@ public class lab6 {
             user.add_at_tail(deck.remove_from_head());
             computer.add_at_tail(deck.remove_from_head());
         }
+        play_blind_mans_bluff(user, computer, deck);
     }
 
     public static void main(String[] args) {
