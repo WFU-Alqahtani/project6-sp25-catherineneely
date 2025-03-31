@@ -82,7 +82,21 @@ public class LinkedList {
 
     // swap two cards in the deck at the specific indices
     public void swap(int index1, int index2) {
-        // FIXME
+        // checks if either index is out of bounds
+        if (index1 >= size || index2 >= size || index1 < 0 || index2 < 0) {
+            System.out.println("Card swap error. Index out of bounds.");
+            return;
+        }
+        // if the indices are the same, there is no need to swap
+        if (index1 == index2) {
+            return;
+        }
+        // removes the cards from the respective indices
+        Card card1 = remove_from_index(index1);
+        Card card2 = remove_from_index(index2);
+        // adds the cards to the new indices
+        insert_at_index(card1, index2);
+        insert_at_index(card2, index1);
     }
 
     // add card at the end of the list
@@ -115,6 +129,9 @@ public class LinkedList {
         }
         size--;
         return tempCard;
+    }
+    public boolean isEmpty() {
+        return size == 0;
     }
 
     // check to make sure the linked list is implemented correctly by iterating forwards and backwards
