@@ -25,46 +25,68 @@ public class lab6 {
 
     private static void play_blind_mans_bluff(LinkedList user, LinkedList computer, LinkedList deck) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("\n**Starting Blind Mans Bluff**\n");
+        System.out.println("\n**Starting Blind Mans Bluff**");
 
-        int rounds = 5;
+        int rounds = 0;
         int userWins = 0;
         int userLosses = 0;
         int prevUserLosses = 0;
         int computerWins = 0;
 
-        while (rounds > 0) {
-            System.out.println("Round " + rounds + "\n");
+        while (rounds < 5) {
+            System.out.println("\n**Round " + (rounds + 1) + "**\n");
 
             Card userCard = user.remove_from_head();
             Card computerCard = computer.remove_from_head();
 
-            System.out.println("User card: ?");
-            System.out.println("Computer card: ");
+            System.out.println("User card--> ?");
+            System.out.print("Computer card--> ");
             computerCard.print_card();
 
-            System.out.println("\nGuess if your card higher or lower (H/L): ");
+            System.out.print("\nGuess if your card higher or lower (H/L): ");
             String guess = scanner.nextLine();
 
             int compare = userCard.getRank().compareTo(computerCard.getRank());
 
             if ((guess.equalsIgnoreCase("H") && compare > 0) || (guess.equalsIgnoreCase("L") && compare < 0)) {
                 System.out.println("You guessed correctly!");
+                System.out.print("User card--> ");
+                userCard.print_card();
+                System.out.print("\nComputer card--> ");
+                computerCard.print_card();
+                System.out.println();
                 userWins++;
                 prevUserLosses = 0;
             } else if (compare == 0) {
                 System.out.println("The ranks are equal!");
                 compare = userCard.getSuit().compareTo(computerCard.getSuit());
                 if (compare > 0) {
+                    System.out.println("User wins based on suit!");
+                    System.out.print("User card--> ");
+                    userCard.print_card();
+                    System.out.print("\nComputer card--> ");
+                    computerCard.print_card();
+                    System.out.println();
                     userWins++;
                     prevUserLosses = 0;
                 } else if (compare < 0) {
+                    System.out.println("Computer wins based on suit!");
+                    System.out.print("User card--> ");
+                    userCard.print_card();
+                    System.out.print("\nComputer card--> ");
+                    computerCard.print_card();
+                    System.out.println();
                     computerWins++;
                     userLosses++;
                     prevUserLosses++;
                 }
             } else {
                 System.out.println("You guessed incorrectly!");
+                System.out.print("User card--> ");
+                userCard.print_card();
+                System.out.print("\nComputer card--> ");
+                computerCard.print_card();
+                System.out.println();
                 computerWins++;
                 userLosses++;
                 prevUserLosses++;
@@ -74,9 +96,9 @@ public class lab6 {
                 rage_quit(user, computer, deck);
                 return;
             }
-            rounds--;
+            rounds++;
         }
-        System.out.println("**End of Blind Mans Bluff**");
+        System.out.println("\n**End of Blind Mans Bluff**");
         System.out.println("User wins: " + userWins);
         System.out.println("Computer wins: " + computerWins);
     }
@@ -113,7 +135,6 @@ public class lab6 {
 
         // shuffle the deck (random order)
         deck.shuffle(512);
-        deck.print();
         deck.sanity_check(); // because we can all use one
 
         // cards for player 1 (hand)
