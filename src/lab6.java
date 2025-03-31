@@ -36,6 +36,7 @@ public class lab6 {
         while (rounds < 5) {
             System.out.println("\n**Round " + (rounds + 1) + "**\n");
 
+            // removes the top card from the user and computer's respective decks
             Card userCard = user.remove_from_head();
             Card computerCard = computer.remove_from_head();
             if (userCard == null || computerCard == null) {
@@ -43,6 +44,7 @@ public class lab6 {
                 return;
             }
 
+            // the user's card is hidden, but the computers card is revealed to the user
             System.out.println("User card--> ?");
             System.out.print("Computer card--> ");
             computerCard.print_card();
@@ -58,6 +60,7 @@ public class lab6 {
                 return;
             }
 
+            // the user's guess and the comparison of the two cards is used to determine who wins
             if ((guess.equalsIgnoreCase("H") && compare > 0) || (guess.equalsIgnoreCase("L") && compare < 0)) {
                 System.out.println("You guessed correctly!");
                 userWins++;
@@ -81,6 +84,7 @@ public class lab6 {
                 userLosses++;
                 prevUserLosses++;
             }
+            // both cards are revealed, and then added back to the deck
             System.out.print("User card--> ");
             userCard.print_card();
             System.out.print("\nComputer card--> ");
@@ -89,6 +93,7 @@ public class lab6 {
             deck.add_at_tail(userCard);
             deck.add_at_tail(computerCard);
 
+            // if the user has lost three times in a row, the method rage_quit() is called
             if (userLosses == 3 && (prevUserLosses - 1) == 2) {
                 rage_quit(user, computer, deck);
                 return;
@@ -102,6 +107,7 @@ public class lab6 {
     public static void rage_quit(LinkedList user, LinkedList computer, LinkedList deck) {
         System.out.println("\n**Rage Quitting**\n");
 
+        // the decks are emptied
         while(!deck.isEmpty()) {
             deck.remove_from_head();
         }
@@ -112,10 +118,12 @@ public class lab6 {
             computer.remove_from_head();
         }
 
+        // the deck is filled and shuffled
         deck = initialize_deck();
         deck.sanity_check();
         deck.shuffle(512);
 
+        // the user and computer are dealt five cards for a new game
         int numCardsDealt = 5;
         for (int i = 0; i < numCardsDealt; i++) {
             user.add_at_tail(deck.remove_from_head());
