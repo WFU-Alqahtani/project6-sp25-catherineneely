@@ -46,12 +46,23 @@ public class lab6 {
             System.out.println("\nGuess if your card higher or lower (H/L): ");
             String guess = scanner.nextLine();
 
-            // compare cards here
+            int compare = userCard.getRank().compareTo(computerCard.getRank());
 
-            if ((guess.equalsIgnoreCase("H" && )) || (guess.equalsIgnoreCase("L") && )) {
+            if ((guess.equalsIgnoreCase("H") && compare > 0) || (guess.equalsIgnoreCase("L") && compare < 0)) {
                 System.out.println("You guessed correctly!");
                 userWins++;
                 prevUserLosses = 0;
+            } else if (compare == 0) {
+                System.out.println("The ranks are equal!");
+                compare = userCard.getSuit().compareTo(computerCard.getSuit());
+                if (compare > 0) {
+                    userWins++;
+                    prevUserLosses = 0;
+                } else if (compare < 0) {
+                    computerWins++;
+                    userLosses++;
+                    prevUserLosses++;
+                }
             } else {
                 System.out.println("You guessed incorrectly!");
                 computerWins++;
