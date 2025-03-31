@@ -42,12 +42,34 @@ public class LinkedList {
 
     // add card at the end of the list
     public void add_at_tail(Card data) {
-        // FIXME
+        Node newCard = new Node(data);
+        if (tail == null) {
+            head = newCard;
+            tail = newCard;
+        } else {
+            tail.next = newCard;
+            newCard.prev = tail;
+            tail = newCard;
+        }
+        size++;
     }
 
     // remove a card from the beginning of the list
     public Card remove_from_head() {
-        // FIXME
+        if (head == null) {
+            return null;
+        }
+        Card tempCard = head.data;
+        head = head.next;
+        // If the head is not null, the list is not empty, but if the head it null,
+        // the list is empty, so the tail must also be null.
+        if (head != null) {
+            head.prev = null;
+        } else {
+            tail = null;
+        }
+        size--;
+        return tempCard;
     }
 
     // check to make sure the linked list is implemented correctly by iterating forwards and backwards
