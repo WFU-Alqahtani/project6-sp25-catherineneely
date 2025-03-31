@@ -24,6 +24,13 @@ public class Card {
         rank = r;
     }
 
+    public ranks getRank(){
+        return rank;
+    }
+    public suites getSuit(){
+        return suit;
+    }
+
     public void print_card(){
         System.out.print(suit + ": " + rank);
     }
